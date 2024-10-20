@@ -8,53 +8,65 @@ class STAC_CLIENT:
     client used to create STAC connections, search STAC API, and create lists 
     of hrefs to assets that are desired to be downloaded
     """
-    def __init__(self, endpoint: str, aoi: Polygon):
+    def __init__(self, catalog_endpoint: str, collection: str):
         """_summary_
 
         Args:
-            endpoint (str): STAC catalog endpoint
-            aoi (Polygon): shapely polygon of area of interest
+            catalog_endpoint (str): STAC catalog endpoint
+            collection (str): collection string for search
         """
-        self.endpoint = endpoint
-        self.aoi = aoi
+        self.endpoint = catalog_endpoint
+        self.collection = collection
 
     def connection_factory(self) -> Client:
         """
-        factory to create client connected to stac endpoint
+        factory to create client connected to stac catalog endpoint
 
         Returns:
             Client: client connected to target catalog
         """
+        print('hold')
         catalog = Client.open(self.endpoint)
         return catalog
 
-    def AOI_search(self, client: Client) -> List[Item]:
+    def aoi_search(self, client: Client, aoi: Polygon, date='str') -> List[Item]:
         """
         search stac API for items in AOI
 
         Args:
-            client (Client): STAC client 
+            client (Client): STAC client
+            aoi (Polygon): shapely polygon for search
+            date: string date like '2015-01-03' for date search too
 
         Returns:
             List[Item]: List of items from the collection that are in the AOI
         """
         search = client.search(
-            max_items=10,
-            collections='aster_green_vegetation',
-            intersects=self.aoi
+            collections=self.collection,
+            intersects=aoi,
+            datetime=date
         )
         items = self.generate_itmes(search)
       
         return items
     
-    def generate_itmes(self, search: ItemSearch) -> List[Item]:
-        """_summary_
+    def generate_itmes(self, search: ItemSearch) -> List[str]:
+        """
+        take search results and generate href links for download
+        by parsing through item attributes and assets
+        Args:
+            search (ItemSearch): search results
 
         Returns:
-            List[str]: _description_
+            List[str]: 
         """
-        items = search.get_all_items()
-        # WHAT IF ITEM COLLECTION IS EMPTY?   ADD A BIT OF LOGIC 
-        result = items.items[0].to_dict()
-        pystac_items = items.items
-        return pystac_items
+
+        item_links = []
+        for item in search.items():
+            # TODO: what if search results are empty?
+            for key in item.assets.keys():
+                # could be multiple keys, only have one for now
+                link = item.assets[key].href
+                item_links.append(link)
+
+        return item_links
