@@ -32,9 +32,10 @@ class Preprocessor:
             RasterDataset: clipped raster
         """
         raster_crs = xds.rio.crs
-        clip_geom = self.clip_prep(raster_crs)
-        clipped: RasterDataset = xds.rio.clip(clip_geom)
-        return clipped
+        print(f'raster crs is: {raster_crs}')
+        # clip_geom = self.clip_prep(raster_crs)
+        # clipped: RasterDataset = xds.rio.clip(clip_geom)
+        # return clipped
     
     def clip_prep(self, raster_crs: str) -> dict:
         """

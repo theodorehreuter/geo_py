@@ -3,7 +3,7 @@ from pystac_client import Client, ItemSearch
 from shapely.geometry import Polygon
 from pystac import Item
 
-class STAC_CLIENT:
+class StacClient:
     """
     client used to create STAC connections, search STAC API, and create lists 
     of hrefs to assets that are desired to be downloaded
