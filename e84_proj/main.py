@@ -24,11 +24,7 @@ CHIRPS_COLLECTION = 'rainfall_chirps_monthly'
 IO_LULC_STAC_ENDPOINT = "https://api.impactobservatory.com/stac-aws"
 LULC_COLLECTION = 'io-10m-annual-lulc' 
 LULC_REGION = 'us-west-2'
-
-# target coordinates in central Chad where I expect there to be some change
-# about 60mi on a side
 TARGET_COORDS_CHAD = [(15.57692, 11.28722), (16.69969, 11.29509), (16.79151, 10.03066), (15.42739, 10.03853), (15.57692, 11.28722)]
-# (15.57692, 11.28722), (16.69969, 11.29509), (16.79151, 10.03066), (15.42739, 10.03853), (15.57692, 11.28722)
 
 CHIRPS_START = '2022-06-15'
 CHIRPS_END = '2023-06-15'

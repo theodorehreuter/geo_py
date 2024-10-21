@@ -1,3 +1,5 @@
+from typing import List
+
 import geopandas as gpd
 import numpy as np
 import rasterio as rio
@@ -13,7 +15,8 @@ class Analyzer:
     class for doing analysis
     """
 
-    def __init__(self):
+    def __init__(self, coords: List[tuple]):
+        self.coords = coords
         pass
 
     def difference(self, start_path: str, end_path: str, output_path: str):
@@ -107,6 +110,17 @@ class Analyzer:
         return out_path
     
     def spatial_statistics(self, poly_path: str, raster_path: str) -> gpd.GeoDataFrame:
+        """
+        generate spatial statistics.  Input raster and use zonal stats to generate 
+        some statistics for each polygon
+
+        Args:
+            poly_path (str): _description_
+            raster_path (str): _description_
+
+        Returns:
+            gpd.GeoDataFrame: _description_
+        """
 
         stats = zonal_stats(poly_path, raster_path)
         gdf = gpd.read_file(poly_path)
@@ -115,7 +129,7 @@ class Analyzer:
         # get index as pandas series
         # loop over stats list of dicts and add index to each item using list comprehension
         # turn list into series with index
-        # join to geodataframe on index
+        # join to geodataframe on index using pd.merge()
 
 
         return gdf
