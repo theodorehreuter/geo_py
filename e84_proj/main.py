@@ -16,10 +16,12 @@ WORLD_POP_PATH = 'https://data.worldpop.org/GIS/Population/Global_2000_2020_1km/
 # CHIRPS_STAC_ENDPONT = "https://explorer.digitalearth.africa/stac/collections/rainfall_chirps_daily"
 DE_AFRICA_STAC = "https://explorer.digitalearth.africa/stac"
 CHIRPS_COLLECTION = 'rainfall_chirps_monthly'
+CHIRPS_REGION = 'af-south-1'
 
 # lulc items = https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc/items
 IO_LULC_STAC_ENDPOINT = "https://api.impactobservatory.com/stac-aws"
 LULC_COLLECTION = 'io-10m-annual-lulc' 
+LULC_REGION = 'us-west-2'
 
 # target coordinates in central Chad where I expect there to be some change
 # about 60mi on a side

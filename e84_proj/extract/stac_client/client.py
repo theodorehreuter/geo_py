@@ -49,7 +49,7 @@ class STAC_CLIENT:
         items = self.generate_itmes(search)
       
         return items
-    
+
     def generate_itmes(self, search: ItemSearch) -> List[str]:
         """
         take search results and generate href links for download
@@ -58,7 +58,7 @@ class STAC_CLIENT:
             search (ItemSearch): search results
 
         Returns:
-            List[str]: 
+            List[str]: list of hrefs of items that were found as matches
         """
 
         item_links = []
