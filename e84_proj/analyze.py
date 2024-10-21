@@ -1,8 +1,10 @@
+import geopandas as gpd
+import numpy as np
 import rasterio as rio
+from rasterio.enums import Resampling
+from rasterstats import zonal_stats
 from xarray import DataArray
 from xrspatial.classify import reclassify
-import numpy as np
-from rasterio.enums import Resampling
 
 TARGET_RESOLUTION_METERS = 1000
 
@@ -69,6 +71,9 @@ class Analyzer:
             path (str): path of input raster
             method (str): method to resample with
             out_path (str): path to save out resampled raster
+        
+        Returns: 
+            output_path (str): output path where resampled raster is saved
         """
         scale_factor = input_resolution_m/TARGET_RESOLUTION_METERS
         resampling_method = None
@@ -98,4 +103,19 @@ class Analyzer:
 
         with rio.open(out_path, "w", **profile) as dataset:
             dataset.write(data)
-        return
+
+        return out_path
+    
+    def spatial_statistics(self, poly_path: str, raster_path: str) -> gpd.GeoDataFrame:
+
+        stats = zonal_stats(poly_path, raster_path)
+        gdf = gpd.read_file(poly_path)
+
+        # use pandas vectorized operations and list comprehension to speed up
+        # get index as pandas series
+        # loop over stats list of dicts and add index to each item using list comprehension
+        # turn list into series with index
+        # join to geodataframe on index
+
+
+        return gdf
