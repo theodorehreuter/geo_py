@@ -7,18 +7,11 @@ from e84_proj.extract.extraction import Extract
 from e84_proj.preprocess.preprocess import Preprocessor
 
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument(
-    '--coords',
-    required=True,
-    help="input coordinates for search area, like [(0,0), (0,1), (1,1), (0,1), (0,0)]")
 
 WORLD_POP_PATH = 'https://data.worldpop.org/GIS/Population/Global_2000_2020_1km/2020/TCD/tcd_ppp_2020_1km_Aggregated.tif'
 # CHIRPS_STAC_ENDPONT = "https://explorer.digitalearth.africa/stac/collections/rainfall_chirps_daily"
 DE_AFRICA_STAC = "https://explorer.digitalearth.africa/stac"
 CHIRPS_COLLECTION = 'rainfall_chirps_monthly'
-
 
 # lulc items = https://api.impactobservatory.com/stac-aws/collections/io-10m-annual-lulc/items
 IO_LULC_STAC_ENDPOINT = "https://api.impactobservatory.com/stac-aws"
@@ -31,6 +24,14 @@ CHIRPS_END = '2023-06-15'
 
 LULC_START = '2022-01-01'
 LULC_END = '2023-01-01'
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    '--coords',
+    required=True,
+    help="input coordinates for search area, like [(0,0), (0,1), (1,1), (0,1), (0,0)]")
+
 
 
 def main(
@@ -72,7 +73,7 @@ def main(
             "start": lulc_start_items[0],
             "end": lulc_end_items[0]
         }, 
-        "worldpop": WORLD_POP_PATH
+        "worldpop": world_pop
     }
     extractor = Extract(coords)
     download_paths = extractor.execute_downloads(links)
